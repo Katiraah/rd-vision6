@@ -442,7 +442,8 @@ let searchQ   = '';
 let rciMap    = null;
 let roadsLayer = null;
 let jujaBoundaryLayer = null;
-
+let mapInitialized = false;
+  
 const COND_COLOR = {
   Perfect: '#228B22',
   Good:    '#379155',
@@ -888,29 +889,118 @@ async function loadJujaBoundary() {
 
 async function loadRCIMap() {
   try {
-    const res=await fetch(`${API}/roads`); const data=await res.json();
-    if(!data.success) throw new Error(data.error);
-    const roads=data.roads;
-    if(!roads||!roads.length) return;
-    if(roadsLayer) rciMap.removeLayer(roadsLayer);
-    const valid=roads.filter(r=>r.geometry&&r.geometry.coordinates&&r.geometry.coordinates.length>0);
-    if(!valid.length) return;
-    roadsLayer=L.geoJSON({type:'FeatureCollection',features:valid.map(r=>({
-      type:'Feature',
-      properties:{gid:r.gid,roadname:r.roadname||'Unnamed',roadcode:r.roadcode||'—',condition:r.condition||'Unknown',rci_value:r.rci_value,pothole_count:r.pothole_count||0,density_per_km:r.density_per_km||0,color:COND_COLOR[r.condition]||'#808080'},
-      geometry:r.geometry
-    }))},{
-      style:f=>({color:f.properties.color,weight:2.5,opacity:0.9,lineCap:'round',lineJoin:'round'}),
-      onEachFeature:(f,layer)=>{
-        layer.bindPopup(`<div style="min-width:200px;"><h3 style="margin:0 0 10px;padding-bottom:8px;border-bottom:2px solid #22c55e;color:#333;">${f.properties.roadname}</h3><div style="font-size:12px;line-height:1.8;color:#333;"><strong>Code:</strong> <span style="color:#22c55e">${f.properties.roadcode}</span><br><strong>Condition:</strong> <span style="color:${f.properties.color};font-weight:700">${f.properties.condition}</span><br><strong>RCI:</strong> ${f.properties.rci_value}<br><strong>Potholes:</strong> ${f.properties.pothole_count}<br><strong>Density:</strong> ${f.properties.density_per_km}/km</div></div>`);
-        layer.on('mouseover',function(){this.setStyle({weight:4,opacity:1});});
-        layer.on('mouseout', function(){this.setStyle({weight:2.5,opacity:0.9});});
-      }
-    }).addTo(rciMap);
-    try{const b=roadsLayer.getBounds();if(b.isValid())rciMap.fitBounds(b,{padding:[50,50],maxZoom:16});}catch(e){rciMap.setView([-1.0790,36.9750],14);}
-  } catch(e){console.error('RCI Map Error:',e);}
-}
+    const res = await fetch(`${API}/roads`);
+    const data = await res.json();
 
+    if (!data.success) throw new Error(data.error);
+
+    const roads = data.roads;
+    if (!roads || !roads.length) return;
+
+    if (roadsLayer) {
+      rciMap.removeLayer(roadsLayer);
+    }
+
+    const valid = roads.filter(
+      r => r.geometry && r.geometry.coordinates && r.geometry.coordinates.length > 0
+    );
+
+    if (!valid.length) return;
+
+    roadsLayer = L.geoJSON(
+      {
+        type: 'FeatureCollection',
+        features: valid.map(r => ({
+          type: 'Feature',
+          properties: {
+            gid: r.gid,
+            roadname: r.roadname || 'Unnamed',
+            roadcode: r.roadcode || '—',
+            condition: r.condition || 'Unknown',
+            rci_value: r.rci_value,
+            pothole_count: r.pothole_count || 0,
+            density_per_km: r.density_per_km || 0,
+            color: COND_COLOR[r.condition] || '#808080'
+          },
+          geometry: r.geometry
+        }))
+      },
+      {
+        style: f => ({
+          color: f.properties.color,
+          weight: 2.5,
+          opacity: 0.9,
+          lineCap: 'round',
+          lineJoin: 'round'
+        }),
+
+        onEachFeature: (f, layer) => {
+
+          layer.bindPopup(`
+            <div style="min-width:200px;">
+              <h3 style="margin:0 0 10px;padding-bottom:8px;border-bottom:2px solid #22c55e;color:#333;">
+                ${f.properties.roadname}
+              </h3>
+
+              <div style="font-size:12px;line-height:1.8;color:#333;">
+                <strong>Code:</strong>
+                <span style="color:#22c55e">${f.properties.roadcode}</span><br>
+
+                <strong>Condition:</strong>
+                <span style="color:${f.properties.color};font-weight:700">
+                  ${f.properties.condition}
+                </span><br>
+
+                <strong>RCI:</strong> ${f.properties.rci_value}<br>
+                <strong>Potholes:</strong> ${f.properties.pothole_count}<br>
+                <strong>Density:</strong> ${f.properties.density_per_km}/km
+              </div>
+            </div>
+          `);
+
+          layer.on('mouseover', function () {
+            this.setStyle({
+              weight: 4,
+              opacity: 1
+            });
+          });
+
+          layer.on('mouseout', function () {
+            this.setStyle({
+              weight: 2.5,
+              opacity: 0.9
+            });
+          });
+        }
+      }
+    ).addTo(rciMap);
+
+    // Only zoom to roads the first time
+    try {
+      const bounds = roadsLayer.getBounds();
+
+      if (!mapInitialized && bounds.isValid()) {
+        rciMap.fitBounds(bounds, {
+          padding: [50, 50],
+          maxZoom: 16
+        });
+
+        mapInitialized = true;
+      }
+
+    } catch (e) {
+
+      if (!mapInitialized) {
+        rciMap.setView([-1.0790, 36.9750], 14);
+        mapInitialized = true;
+      }
+
+    }
+
+  } catch (e) {
+    console.error('RCI Map Error:', e);
+  }
+}
 // ── init ─────────────────────────────────────────────────────────────────────
 loadStats();
 loadRoads();
