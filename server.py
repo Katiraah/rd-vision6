@@ -75,7 +75,7 @@ def get_roads():
                     ELSE 0 
                 END AS density_per_km,
                 ST_AsGeoJSON(r.geom)::json AS geometry
-            FROM parc.jujaroads r
+            FROM parc.jujards r
             LEFT JOIN current_counts cc ON r.gid = cc.road_gid
             WHERE r.geom IS NOT NULL
             ORDER BY r.roadname ASC
@@ -128,7 +128,7 @@ def get_stats():
         return jsonify({"success": False, "error": "Database connection failed"}), 500
     try:
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        cur.execute("SELECT COUNT(*) as count FROM parc.jujaroads WHERE geom IS NOT NULL")
+        cur.execute("SELECT COUNT(*) as count FROM parc.jujards WHERE geom IS NOT NULL")
         total_roads = cur.fetchone()['count']
         
         cur.execute("""
@@ -151,7 +151,7 @@ def get_stats():
                 COUNT(CASE WHEN COALESCE(cc.pothole_count, 0) > 0
                            AND (COALESCE(cc.pothole_count, 0)::float / NULLIF(r.length_km, 0)) <= 2.0 THEN 1 END) as good_roads,
                 COUNT(CASE WHEN COALESCE(cc.pothole_count, 0) = 0 THEN 1 END) as perfect_roads
-            FROM parc.jujaroads r
+            FROM parc.jujards r
             LEFT JOIN current_counts cc ON r.gid = cc.road_gid
             WHERE r.length_km > 0
         """)
@@ -215,7 +215,7 @@ def get_timeline():
                 COUNT(p.id) AS pothole_count,
                 r.length_km
             FROM parc.roadpothole p
-            JOIN parc.jujaroads r ON p.road_gid = r.gid
+            JOIN parc.jujards r ON p.road_gid = r.gid
             WHERE p.road_gid = %s AND p.timestamp >= %s AND p.timestamp <= %s
             GROUP BY p.timestamp::date, r.length_km
             ORDER BY period ASC
@@ -272,7 +272,7 @@ def get_analysis():
 
         cur.execute("""
             SELECT gid, roadname, roadtype, roadagency, roadcode, roadclass, length_km
-            FROM parc.jujaroads WHERE gid = %s
+            FROM parc.jujards WHERE gid = %s
         """, (road_gid,))
         road_info = cur.fetchone()
         if not road_info:
@@ -284,7 +284,7 @@ def get_analysis():
                 COUNT(p.id) AS pothole_count,
                 r.length_km
             FROM parc.roadpothole p
-            JOIN parc.jujaroads r ON p.road_gid = r.gid
+            JOIN parc.jujards r ON p.road_gid = r.gid
             WHERE p.road_gid = %s
                 AND p.timestamp >= %s
                 AND p.timestamp <= %s
