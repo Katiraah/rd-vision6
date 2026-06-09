@@ -128,7 +128,7 @@ def get_stats():
         return jsonify({"success": False, "error": "Database connection failed"}), 500
     try:
         cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-        cur.execute("SELECT COUNT(*) as count FROM parc.jujaroads WHERE geom IS NOT NULL")
+        cur.execute("SELECT COUNT(*) as count FROM parc.jujards WHERE geom IS NOT NULL")
         total_roads = cur.fetchone()['count']
         
         cur.execute("""
