@@ -540,7 +540,14 @@ function populateAnalysisDropdown() {
   while(sel.options.length>1) sel.remove(1);
   [...allRoads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
     const o=document.createElement('option'); o.value=r.gid;
-    o.textContent=`${r.roadname||'Unnamed Road'} (${r.roadcode||'—'})`; sel.appendChild(o);
+    // o.textContent=`${r.roadname||'Unnamed Road'} (${r.roadcode||'—'})`; sel.appendChild(o);
+// ---------------------------------
+o.textContent = r.roadcode
+  ? `${r.roadname || 'Unnamed Road'} (${r.roadcode})`
+  : `${r.roadname || 'Unnamed Road'}`;
+// --------------------------------
+
+    
   });
   if(cur) sel.value=cur;
 }
