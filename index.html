@@ -516,26 +516,73 @@ function showView(name) {
 }
 
 // ── dropdowns ────────────────────────────────────────────────────────────────
-function populateDropdowns(roads) {
-  const fill = (id, vals) => {
-    const sel=document.getElementById(id), cur=sel.value;
-    while(sel.options.length>1) sel.remove(1);
-    vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});
-    if(cur) sel.value=cur;
-  };
-  fill('filter-type',   [...new Set(roads.map(r=>r.roadtype).filter(Boolean))].sort());
-  fill('filter-agency', [...new Set(roads.map(r=>r.roadagency).filter(Boolean))].sort());
-  fill('filter-class',  [...new Set(roads.map(r=>r.roadclass).filter(Boolean))].sort());
-  const tl=document.getElementById('tl-road-select'), tlc=tl.value;
-  while(tl.options.length>1) tl.remove(1);
-  [...roads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
-    const o=document.createElement('option'); o.value=r.gid;
-    o.textContent=`${r.roadname||'—'} (${r.roadcode||'—'})`; tl.appendChild(o);
+  // #########################################################3
+// function populateDropdowns(roads) {
+//   const fill = (id, vals) => {
+//     const sel=document.getElementById(id), cur=sel.value;
+//     while(sel.options.length>1) sel.remove(1);
+//     vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});
+//     if(cur) sel.value=cur;
+//   };
+//   fill('filter-type',   [...new Set(roads.map(r=>r.roadtype).filter(Boolean))].sort());
+//   fill('filter-agency', [...new Set(roads.map(r=>r.roadagency).filter(Boolean))].sort());
+//   fill('filter-class',  [...new Set(roads.map(r=>r.roadclass).filter(Boolean))].sort());
+//   const tl=document.getElementById('tl-road-select'), tlc=tl.value;
+//   while(tl.options.length>1) tl.remove(1);
+//   [...roads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
+//     const o=document.createElement('option'); o.value=r.gid;
+//     o.textContent=`${r.roadname||'—'} (${r.roadcode||'—'})`; tl.appendChild(o);
   
-  });
-  if(tlc) tl.value=tlc;
-}
+//   });
+//   if(tlc) tl.value=tlc;
+// }
+  function populateDropdowns(roads) {
+  const fill = (id, vals) => {
+    const sel = document.getElementById(id),
+          cur = sel.value;
 
+    while (sel.options.length > 1) sel.remove(1);
+
+    vals.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v;
+      o.textContent = v;
+      sel.appendChild(o);
+    });
+
+    if (cur) sel.value = cur;
+  };
+
+  fill('filter-type',
+       [...new Set(roads.map(r => r.roadtype).filter(Boolean))].sort());
+
+  fill('filter-agency',
+       [...new Set(roads.map(r => r.roadagency).filter(Boolean))].sort());
+
+  fill('filter-class',
+       [...new Set(roads.map(r => r.roadclass).filter(Boolean))].sort());
+
+  const tl = document.getElementById('tl-road-select'),
+        tlc = tl.value;
+
+  while (tl.options.length > 1) tl.remove(1);
+
+  [...roads]
+    .sort((a, b) => (a.roadname || '').localeCompare(b.roadname || ''))
+    .forEach(r => {
+
+      const o = document.createElement('option');
+      o.value = r.gid;
+
+      // Show only road name
+      o.textContent = r.roadname || 'Unnamed Road';
+
+      tl.appendChild(o);
+    });
+
+  if (tlc) tl.value = tlc;
+}
+// ############################################################################################33
 // function populateAnalysisDropdown() {
 //   const sel=document.getElementById('analysis-road-select'), cur=sel.value;
 //   while(sel.options.length>1) sel.remove(1);
