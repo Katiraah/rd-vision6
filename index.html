@@ -530,12 +530,8 @@ function populateDropdowns(roads) {
   while(tl.options.length>1) tl.remove(1);
   [...roads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
     const o=document.createElement('option'); o.value=r.gid;
-    // o.textContent=`${r.roadname||'—'} (${r.roadcode||'—'})`; tl.appendChild(o);
-    // ------------------------------------------
-    o.textContent = r.roadcode
-  ? `${r.roadname} (${r.roadcode})`
-  : r.roadname;
-    // ------------------------------------------
+    o.textContent=`${r.roadname||'—'} (${r.roadcode||'—'})`; tl.appendChild(o);
+  
   });
   if(tlc) tl.value=tlc;
 }
