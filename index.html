@@ -684,7 +684,8 @@ async function generateTimeline() {
     const data=await res.json(); if(!data.success) throw new Error(data.error);
     const pts=data.points;
     document.getElementById('tl-status').textContent=`${road.roadname} · ${pts.length} data point${pts.length!==1?'s':''}`;
-    if(!pts.length){document.getElementById('tl-empty').innerHTML=`<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><p>No pothole detections exists for this road in the selected date ranges.</p>`;return;}
+    // if(!pts.length){document.getElementById('tl-empty').innerHTML=`<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><p>No pothole detections exists for this road in the selected date ranges.</p>`;return;}
+    if(!pts.length){document.getElementById('tl-empty').innerHTML=`<p>No pothole detections exists for this road in the selected date ranges.</p>`;return;}
     document.getElementById('tl-empty').style.display='none';
     drawTimelineChart(pts,road);
   } catch(e){
