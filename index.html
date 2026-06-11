@@ -259,7 +259,7 @@
 
     <div class="view active" id="view-dashboard">
       <div class="page-header">
-        <div><div class="page-title">Overview</div><div class="page-meta" id="page-meta">JUJA · KIAMBU COUNTY · ROAD NETWORK · LOADING...</div></div>
+        <div><div class="page-title">Overview</div><div class="page-meta" id="page-meta">JUJA WARD</div></div>
       </div>
       <div class="stat-grid">
         <div class="stat-card"><div class="stat-label">Roads</div><div class="stat-value" id="stat-total">—</div><div class="stat-sub"></div></div>
@@ -473,7 +473,7 @@ function phPill(n) {
 }
 function densityBar(val) { return `<span class="density-val">${Number(val||0).toFixed(1)}</span>`; }
 
-// ✅ FIXED: RCI display function - handles density >= 10 correctly (RCI = 0)
+//  FIXED: RCI display function - handles density >= 10 correctly (RCI = 0)
 function rciDisplay(val) {
   const num = Number(val || 0);
   let color = '#ef4444';
@@ -839,7 +839,7 @@ function drawAnalysisBarChart(data) {
 }
 
 function renderBreakdownTable(data) {
-  console.log('📊 Rendering breakdown table with data:', data);
+  console.log('Rendering breakdown table with data:', data);
   
   document.getElementById('breakdown-tbody').innerHTML = data.map(d => {
     const rciNum = parseFloat(d.rci);
