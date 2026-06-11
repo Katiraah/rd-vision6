@@ -513,7 +513,24 @@ function showView(name) {
   if(el) el.classList.add('active');
   const titles = {dashboard:'Dashboard',timeline:'Road Timeline',rcimap:'RCI Map',analysis:'Analysis'};
   document.getElementById('topbar-title').textContent = titles[name]||'Dashboard';
-  if(name==='rcimap'){ initRCIMap(); setTimeout(loadRCIMap,100); setTimeout(loadJujaBoundary,200); }
+  // if(name==='rcimap'){ initRCIMap(); setTimeout(loadRCIMap,100); setTimeout(loadJujaBoundary,200); }
+  if(name==='rcimap'){
+    console.log("1. Opening RCI view");
+
+    initRCIMap();
+
+    console.log("2. rciMap =", rciMap);
+
+    setTimeout(()=>{
+        console.log("3. Before loadRCIMap =", rciMap);
+        loadRCIMap();
+    },100);
+
+    setTimeout(()=>{
+        console.log("4. Before loadJujaBoundary =", rciMap);
+        loadJujaBoundary();
+    },200);
+}
   if(name==='analysis') populateAnalysisDropdown();
 }
 
