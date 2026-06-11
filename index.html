@@ -676,7 +676,7 @@ async function generateTimeline() {
   document.getElementById('ri-rci').innerHTML       = rciDisplay(road.rci_value);
   document.getElementById('ri-condition').textContent=conditionText(road.condition);
   document.getElementById('tl-status').textContent='Loading...';
-  document.getElementById('tl-empty').innerHTML=`<span class="spinner"></span><p style="font-family:var(--mono);font-size:11px;color:var(--text3)">Fetching pothole history...</p>`;
+  document.getElementById('tl-empty').innerHTML=`<span class="spinner"></span><p style="font-family:var(--mono);font-size:11px;color:var(--text3)">Loading...</p>`;
   document.getElementById('tl-empty').style.display='flex';
   const old=document.getElementById('tl-svg'); if(old) old.remove();
   try {
