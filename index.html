@@ -54,7 +54,7 @@
   .stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-bottom:24px;padding:0 8px;}
   .stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px;position:relative;overflow:hidden;transition:border 0.2s,transform 0.2s;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:110px;}
   /* .stat-card:hover{border-color:var(--green);transform:translateY(-2px);} */
-  .stat-card:hover{border-color:var(--green);transform:none;}
+  .stat-card:hover{border-color:var(--green);transform: none;}
   .stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:12px 12px 0 0;background:var(--green);}
   .stat-label{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;width:100%;}
   .stat-value{font-size:32px;font-weight:700;line-height:1;margin-bottom:6px;color:var(--green);}
@@ -84,7 +84,8 @@
   .road-table tbody tr:last-child{border-bottom:none;}
   .road-table tbody tr:hover{background:var(--bg3);}
   .road-table tbody td{ padding:10px 12px; font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color: #ffffff;}  
-  .road-table tbody td.road-id{ font-family:var(--mono); font-size:13px; color:var(--green);}  
+  /* .road-table tbody td.road-id{ font-family:var(--mono); font-size:13px; color:var(--green);}   */
+  .road-table tbody td.road-id{ font-family:var(--mono); font-size:13px; color:var(--text);} 
   .road-table tbody td.dim{ color: #ffffff; font-size:13px;}  
 
   .road-table thead th:nth-child(1),.road-table tbody td:nth-child(1){width:8%;padding:10px 12px;}
@@ -108,7 +109,7 @@
   @keyframes spin{to{transform:rotate(360deg)}}
   .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite;display:inline-block;margin-right:6px;vertical-align:middle;}
   @keyframes pulse-green{0%{box-shadow:0 0 0 0 rgba(34,197,94,0.4)}70%{box-shadow:0 0 0 6px rgba(34,197,94,0)}100%{box-shadow:0 0 0 0 rgba(34,197,94,0)}}
-  .just-updated{animation:pulse-green 0.8s ease-out;}
+  /* .just-updated{animation:pulse-green 0.8s ease-out;} */
   .match{background:rgba(34,197,94,0.15);color:var(--green);border-radius:2px;padding:0 1px;}
 
   .view{display:none;}
@@ -201,7 +202,7 @@
 <aside class="sidebar">
   <div class="sidebar-brand">
     <div class="brand-name">Road Vision</div>
-    <div class="brand-sub">JUJA WARD TARMACKED ROADS NETWORK</div>
+    <div class="brand-sub">JUJA WARD ROAD NETWORK</div>
   </div>
 
   <div class="sidebar-section-label">Main</div>
@@ -233,11 +234,11 @@
   <div class="sidebar-section-label" style="margin-top:12px;">Analysis</div>
   <a class="nav-item" id="nav-timeline" href="#" onclick="showView('timeline');return false;">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-    Road timeline
+    Road Timeline
   </a>
   <a class="nav-item" id="nav-rcimap" href="#" onclick="showView('rcimap');return false;">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-    RCI map
+    RCI Map
   </a>
   <a class="nav-item" id="nav-analysis" href="#" onclick="showView('analysis');return false;">
     <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/><circle cx="18.5" cy="5.5" r="2.5"/></svg>
@@ -247,8 +248,7 @@
 
 <div class="main">
   <header class="topbar">
-     <div class="topbar-title" id="topbar-title">DASHBOARD</div>
-    <!-- <div class="topbar-title" id="topbar-title"></div> -->
+    <div class="topbar-title" id="topbar-title">Dashboard</div>
     <div class="search-wrap" id="search-wrap">
       <svg class="search-icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" id="global-search" placeholder="Search road name, code, type, agency..." oninput="onSearch(this.value)" autocomplete="off" spellcheck="false">
@@ -261,7 +261,6 @@
     <div class="view active" id="view-dashboard">
       <div class="page-header">
         <!-- <div><div class="page-title">DASHBOARD</div><div class="page-meta" id="page-meta">JUJA WARD</div></div> -->
-         <div><div class="page-title"></div><div class="page-meta" id="page-meta">JUJA WARD</div></div>
       </div>
       <div class="stat-grid">
         <div class="stat-card"><div class="stat-label">Roads</div><div class="stat-value" id="stat-total">—</div><div class="stat-sub"></div></div>
@@ -295,7 +294,7 @@
               <th onclick="sortBy('rci_value')">RCI</th>
               <th onclick="sortBy('condition')">Condition</th>
             </tr></thead>
-            <tbody id="roads-tbody"><tr><td colspan="10" class="state-row"><span class="spinner"></span>Please wait...</td></tr></tbody>
+            <tbody id="roads-tbody"><tr><td colspan="10" class="state-row"><span class="spinner"></span>Running spatial analysis...</td></tr></tbody>
           </table>
         </div>
       </div>
@@ -308,7 +307,7 @@
         <div class="panel-header"><span class="panel-title">Road Condition Over Time</span><span class="panel-meta" id="tl-status">No road selected</span></div>
         <div class="timeline-controls">
           <span class="tl-label">Road:</span>
-          <select class="tl-select" id="tl-road-select"><option value="">— Select a road —</option></select>
+          <select class="tl-select" id="tl-road-select"><option value=""> Select a road </option></select>
           <span class="tl-label">From:</span><input type="date" class="tl-date" id="tl-date-from">
           <span class="tl-label">To:</span><input type="date" class="tl-date" id="tl-date-to">
           <button class="btn-generate" onclick="generateTimeline()">Generate</button>
@@ -325,9 +324,8 @@
         </div>
         <div class="tl-chart-wrap" id="tl-chart-wrap">
           <div class="tl-empty" id="tl-empty">
-            <!-- <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> -->
-            <!-- <p>Select a road above and click <strong>Generate</strong><br>to view its pothole count over time.</p> -->
-            <p>Select a road </p>
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            <p>Select a road above and click <strong>Generate</strong><br>to view its pothole count over time.</p>
           </div>
           <div class="tl-tooltip" id="tl-tooltip"><div class="tt-date" id="tt-date"></div><div class="tt-val" id="tt-val"></div></div>
         </div>
@@ -446,7 +444,8 @@ let searchQ   = '';
 let rciMap    = null;
 let roadsLayer = null;
 let jujaBoundaryLayer = null;
-
+let mapInitialized = false;
+  
 const COND_COLOR = {
   Perfect: '#228B22',
   Good:    '#379155',
@@ -476,7 +475,7 @@ function phPill(n) {
 }
 function densityBar(val) { return `<span class="density-val">${Number(val||0).toFixed(1)}</span>`; }
 
-//  FIXED: RCI display function - handles density >= 10 correctly (RCI = 0)
+// ✅ FIXED: RCI display function - handles density >= 10 correctly (RCI = 0)
 function rciDisplay(val) {
   const num = Number(val || 0);
   let color = '#ef4444';
@@ -514,40 +513,126 @@ function showView(name) {
   if(el) el.classList.add('active');
   const titles = {dashboard:'Dashboard',timeline:'Road Timeline',rcimap:'RCI Map',analysis:'Analysis'};
   document.getElementById('topbar-title').textContent = titles[name]||'Dashboard';
-  if(name==='rcimap'){ initRCIMap(); setTimeout(loadRCIMap,100); setTimeout(loadJujaBoundary,200); }
+  // if(name==='rcimap'){ initRCIMap(); setTimeout(loadRCIMap,100); setTimeout(loadJujaBoundary,200); }
+  if(name==='rcimap'){
+    console.log("1. Opening RCI view");
+
+    initRCIMap();
+
+    console.log("2. rciMap =", rciMap);
+
+    setTimeout(()=>{
+        console.log("3. Before loadRCIMap =", rciMap);
+        loadRCIMap();
+    },100);
+
+    setTimeout(()=>{
+        console.log("4. Before loadJujaBoundary =", rciMap);
+        loadJujaBoundary();
+    },200);
+}
   if(name==='analysis') populateAnalysisDropdown();
 }
 
 // ── dropdowns ────────────────────────────────────────────────────────────────
-function populateDropdowns(roads) {
+  // #########################################################3
+// function populateDropdowns(roads) {
+//   const fill = (id, vals) => {
+//     const sel=document.getElementById(id), cur=sel.value;
+//     while(sel.options.length>1) sel.remove(1);
+//     vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});
+//     if(cur) sel.value=cur;
+//   };
+//   fill('filter-type',   [...new Set(roads.map(r=>r.roadtype).filter(Boolean))].sort());
+//   fill('filter-agency', [...new Set(roads.map(r=>r.roadagency).filter(Boolean))].sort());
+//   fill('filter-class',  [...new Set(roads.map(r=>r.roadclass).filter(Boolean))].sort());
+//   const tl=document.getElementById('tl-road-select'), tlc=tl.value;
+//   while(tl.options.length>1) tl.remove(1);
+//   [...roads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
+//     const o=document.createElement('option'); o.value=r.gid;
+//     o.textContent=`${r.roadname||'—'} (${r.roadcode||'—'})`; tl.appendChild(o);
+  
+//   });
+//   if(tlc) tl.value=tlc;
+// }
+  function populateDropdowns(roads) {
   const fill = (id, vals) => {
-    const sel=document.getElementById(id), cur=sel.value;
-    while(sel.options.length>1) sel.remove(1);
-    vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=v;sel.appendChild(o);});
-    if(cur) sel.value=cur;
-  };
-  fill('filter-type',   [...new Set(roads.map(r=>r.roadtype).filter(Boolean))].sort());
-  fill('filter-agency', [...new Set(roads.map(r=>r.roadagency).filter(Boolean))].sort());
-  fill('filter-class',  [...new Set(roads.map(r=>r.roadclass).filter(Boolean))].sort());
-  const tl=document.getElementById('tl-road-select'), tlc=tl.value;
-  while(tl.options.length>1) tl.remove(1);
-  [...roads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
-    const o=document.createElement('option'); o.value=r.gid;
-    o.textContent=`${r.roadname||'—'} (${r.roadcode||'—'})`; tl.appendChild(o);
-  });
-  if(tlc) tl.value=tlc;
-}
+    const sel = document.getElementById(id),
+          cur = sel.value;
 
+    while (sel.options.length > 1) sel.remove(1);
+
+    vals.forEach(v => {
+      const o = document.createElement('option');
+      o.value = v;
+      o.textContent = v;
+      sel.appendChild(o);
+    });
+
+    if (cur) sel.value = cur;
+  };
+
+  fill('filter-type',
+       [...new Set(roads.map(r => r.roadtype).filter(Boolean))].sort());
+
+  fill('filter-agency',
+       [...new Set(roads.map(r => r.roadagency).filter(Boolean))].sort());
+
+  fill('filter-class',
+       [...new Set(roads.map(r => r.roadclass).filter(Boolean))].sort());
+
+  const tl = document.getElementById('tl-road-select'),
+        tlc = tl.value;
+
+  while (tl.options.length > 1) tl.remove(1);
+
+  [...roads]
+    .sort((a, b) => (a.roadname || '').localeCompare(b.roadname || ''))
+    .forEach(r => {
+
+      const o = document.createElement('option');
+      o.value = r.gid;
+
+      // Show only road name
+      o.textContent = r.roadname || 'Unnamed Road';
+
+      tl.appendChild(o);
+    });
+
+  if (tlc) tl.value = tlc;
+}
+// ############################################################################################33
+// function populateAnalysisDropdown() {
+//   const sel=document.getElementById('analysis-road-select'), cur=sel.value;
+//   while(sel.options.length>1) sel.remove(1);
+//   [...allRoads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
+//     const o=document.createElement('option'); o.value=r.gid;
+//     // o.textContent=`${r.roadname||'Unnamed Road'} (${r.roadcode||'—'})`; sel.appendChild(o);
+// // ---------------------------------
+// o.textContent = r.roadcode
+//   ? `${r.roadname || 'Unnamed Road'} (${r.roadcode})`
+//   : `${r.roadname || 'Unnamed Road'}`;
+// // --------------------------------
+
+    
+//   });
+//   if(cur) sel.value=cur;
+// }
 function populateAnalysisDropdown() {
   const sel=document.getElementById('analysis-road-select'), cur=sel.value;
   while(sel.options.length>1) sel.remove(1);
+
   [...allRoads].sort((a,b)=>(a.roadname||'').localeCompare(b.roadname||'')).forEach(r=>{
-    const o=document.createElement('option'); o.value=r.gid;
-    o.textContent=`${r.roadname||'Unnamed Road'} (${r.roadcode||'—'})`; sel.appendChild(o);
+    const o=document.createElement('option');
+    o.value=r.gid;
+
+    o.textContent = r.roadname || 'Unnamed Road';
+
+    sel.appendChild(o);
   });
+
   if(cur) sel.value=cur;
 }
-
 // ── table ───────────────────────────────────────────────────────────────────
 function sortBy(col) {
   sortDir=sortCol===col?(sortDir==='asc'?'desc':'asc'):(col==='pothole_count'||col==='density_per_km'||col==='rci_value'?'desc':'asc');
@@ -581,7 +666,7 @@ function renderTable() {
   });
   document.getElementById('result-count').textContent=rows.length;
   const tbody=document.getElementById('roads-tbody');
-  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="10" class="state-row">No roads matching current filters.</td></tr>`; return; }
+  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="10" class="state-row">No roads match your search or filters.</td></tr>`; return; }
   tbody.innerHTML=rows.map(r=>`
     <tr onclick="openAnalysisFromTable(${r.gid})">
       <td class="road-id">${highlight(r.roadcode,q)}</td>
@@ -620,22 +705,54 @@ function updateBadges(roads) {
 }
 
 // ── API ───────────────────────────────────────────────────────────────────────
+// async function loadStats() {
+//   try {
+//     const ctrl=new AbortController(); const tid=setTimeout(()=>ctrl.abort(),50000);
+//     const res=await fetch(`${API}/stats`,{signal:ctrl.signal}); clearTimeout(tid);
+//     if(!res.ok) throw new Error(`HTTP ${res.status}`);
+//     const data=await res.json(); if(!data.success) throw new Error(data.error);
+//     const s=data.stats;
+//     const sv=(id,val)=>{const el=document.getElementById(id);if(!el)return;el.textContent=val??'0';el.classList.remove('just-updated');void el.offsetWidth;el.classList.add('just-updated');};
+//     sv('stat-total',   s.total_roads);
+//     sv('stat-potholes',Number(s.total_potholes||0).toLocaleString());
+//     sv('stat-poor',    s.poor_roads||0);
+//   } catch(e) {
+//     ['stat-total','stat-potholes','stat-poor'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});
+//   }
+// }
 async function loadStats() {
   try {
-    const ctrl=new AbortController(); const tid=setTimeout(()=>ctrl.abort(),50000);
-    const res=await fetch(`${API}/stats`,{signal:ctrl.signal}); clearTimeout(tid);
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data=await res.json(); if(!data.success) throw new Error(data.error);
-    const s=data.stats;
-    const sv=(id,val)=>{const el=document.getElementById(id);if(!el)return;el.textContent=val??'0';el.classList.remove('just-updated');void el.offsetWidth;el.classList.add('just-updated');};
-    sv('stat-total',   s.total_roads);
-    sv('stat-potholes',Number(s.total_potholes||0).toLocaleString());
-    sv('stat-poor',    s.poor_roads||0);
-  } catch(e) {
-    ['stat-total','stat-potholes','stat-poor'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 50000);
+
+    const res = await fetch(`${API}/stats`, { signal: ctrl.signal });
+    clearTimeout(tid);
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    const s = data.stats;
+
+    // Update values only (NO animation)
+    const sv = (id, val) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = val ?? '0';
+    };
+
+    sv('stat-total', s.total_roads);
+    sv('stat-potholes', Number(s.total_potholes || 0).toLocaleString());
+    sv('stat-poor', s.poor_roads || 0);
+
+  } catch (e) {
+    ['stat-total', 'stat-potholes', 'stat-poor'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '—';
+    });
   }
 }
-
 async function loadRoads() {
   try {
     const ctrl=new AbortController(); const tid=setTimeout(()=>ctrl.abort(),50000);
@@ -678,7 +795,7 @@ async function generateTimeline() {
   document.getElementById('ri-rci').innerHTML       = rciDisplay(road.rci_value);
   document.getElementById('ri-condition').textContent=conditionText(road.condition);
   document.getElementById('tl-status').textContent='Loading...';
-  document.getElementById('tl-empty').innerHTML=`<span class="spinner"></span><p style="font-family:var(--mono);font-size:11px;color:var(--text3)">Loading...</p>`;
+  document.getElementById('tl-empty').innerHTML=`<span class="spinner"></span><p style="font-family:var(--mono);font-size:11px;color:var(--text3)">Fetching pothole history...</p>`;
   document.getElementById('tl-empty').style.display='flex';
   const old=document.getElementById('tl-svg'); if(old) old.remove();
   try {
@@ -686,8 +803,7 @@ async function generateTimeline() {
     const data=await res.json(); if(!data.success) throw new Error(data.error);
     const pts=data.points;
     document.getElementById('tl-status').textContent=`${road.roadname} · ${pts.length} data point${pts.length!==1?'s':''}`;
-    // if(!pts.length){document.getElementById('tl-empty').innerHTML=`<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><p>No pothole detections exists for this road in the selected date ranges.</p>`;return;}
-    if(!pts.length){document.getElementById('tl-empty').innerHTML=`<p>No pothole detections exists for this road in the selected date ranges.</p>`;return;}
+    if(!pts.length){document.getElementById('tl-empty').innerHTML=`<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg><p>No pothole detections exists for this road in the selected date range.</p>`;return;}
     document.getElementById('tl-empty').style.display='none';
     drawTimelineChart(pts,road);
   } catch(e){
@@ -754,8 +870,7 @@ async function loadAnalysis() {
       `${ri.name.toUpperCase()} — MONTHLY CONDITION HISTORY`;
 
     if (!data.data.length) {
-      // emptyState.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><p>No historical data exists for the current road</p>';
-        emptyState.innerHTML = '<p>No historical data exists for the current road</p>';
+      emptyState.innerHTML = '<svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M18 20V10M12 20V4M6 20v-6"/></svg><p>No historical data exists for this road</p>';
       document.getElementById('breakdown-tbody').innerHTML = '';
       return;
     }
@@ -844,7 +959,7 @@ function drawAnalysisBarChart(data) {
 }
 
 function renderBreakdownTable(data) {
-  console.log('Rendering breakdown table with data:', data);
+  console.log('📊 Rendering breakdown table with data:', data);
   
   document.getElementById('breakdown-tbody').innerHTML = data.map(d => {
     const rciNum = parseFloat(d.rci);
@@ -894,29 +1009,118 @@ async function loadJujaBoundary() {
 
 async function loadRCIMap() {
   try {
-    const res=await fetch(`${API}/roads`); const data=await res.json();
-    if(!data.success) throw new Error(data.error);
-    const roads=data.roads;
-    if(!roads||!roads.length) return;
-    if(roadsLayer) rciMap.removeLayer(roadsLayer);
-    const valid=roads.filter(r=>r.geometry&&r.geometry.coordinates&&r.geometry.coordinates.length>0);
-    if(!valid.length) return;
-    roadsLayer=L.geoJSON({type:'FeatureCollection',features:valid.map(r=>({
-      type:'Feature',
-      properties:{gid:r.gid,roadname:r.roadname||'Unnamed',roadcode:r.roadcode||'—',condition:r.condition||'Unknown',rci_value:r.rci_value,pothole_count:r.pothole_count||0,density_per_km:r.density_per_km||0,color:COND_COLOR[r.condition]||'#808080'},
-      geometry:r.geometry
-    }))},{
-      style:f=>({color:f.properties.color,weight:2.5,opacity:0.9,lineCap:'round',lineJoin:'round'}),
-      onEachFeature:(f,layer)=>{
-        layer.bindPopup(`<div style="min-width:200px;"><h3 style="margin:0 0 10px;padding-bottom:8px;border-bottom:2px solid #22c55e;color:#333;">${f.properties.roadname}</h3><div style="font-size:12px;line-height:1.8;color:#333;"><strong>Code:</strong> <span style="color:#22c55e">${f.properties.roadcode}</span><br><strong>Condition:</strong> <span style="color:${f.properties.color};font-weight:700">${f.properties.condition}</span><br><strong>RCI:</strong> ${f.properties.rci_value}<br><strong>Potholes:</strong> ${f.properties.pothole_count}<br><strong>Density:</strong> ${f.properties.density_per_km}/km</div></div>`);
-        layer.on('mouseover',function(){this.setStyle({weight:4,opacity:1});});
-        layer.on('mouseout', function(){this.setStyle({weight:2.5,opacity:0.9});});
-      }
-    }).addTo(rciMap);
-    try{const b=roadsLayer.getBounds();if(b.isValid())rciMap.fitBounds(b,{padding:[50,50],maxZoom:16});}catch(e){rciMap.setView([-1.0790,36.9750],14);}
-  } catch(e){console.error('RCI Map Error:',e);}
-}
+    const res = await fetch(`${API}/roads`);
+    const data = await res.json();
 
+    if (!data.success) throw new Error(data.error);
+
+    const roads = data.roads;
+    if (!roads || !roads.length) return;
+
+    if (roadsLayer) {
+      rciMap.removeLayer(roadsLayer);
+    }
+
+    const valid = roads.filter(
+      r => r.geometry && r.geometry.coordinates && r.geometry.coordinates.length > 0
+    );
+
+    if (!valid.length) return;
+
+    roadsLayer = L.geoJSON(
+      {
+        type: 'FeatureCollection',
+        features: valid.map(r => ({
+          type: 'Feature',
+          properties: {
+            gid: r.gid,
+            roadname: r.roadname || 'Unnamed',
+            roadcode: r.roadcode || '—',
+            condition: r.condition || 'Unknown',
+            rci_value: r.rci_value,
+            pothole_count: r.pothole_count || 0,
+            density_per_km: r.density_per_km || 0,
+            color: COND_COLOR[r.condition] || '#808080'
+          },
+          geometry: r.geometry
+        }))
+      },
+      {
+        style: f => ({
+          color: f.properties.color,
+          weight: 2.5,
+          opacity: 0.9,
+          lineCap: 'round',
+          lineJoin: 'round'
+        }),
+
+        onEachFeature: (f, layer) => {
+
+          layer.bindPopup(`
+            <div style="min-width:200px;">
+              <h3 style="margin:0 0 10px;padding-bottom:8px;border-bottom:2px solid #22c55e;color:#333;">
+                ${f.properties.roadname}
+              </h3>
+
+              <div style="font-size:12px;line-height:1.8;color:#333;">
+                <strong>Code:</strong>
+                <span style="color:#22c55e">${f.properties.roadcode}</span><br>
+
+                <strong>Condition:</strong>
+                <span style="color:${f.properties.color};font-weight:700">
+                  ${f.properties.condition}
+                </span><br>
+
+                <strong>RCI:</strong> ${f.properties.rci_value}<br>
+                <strong>Potholes:</strong> ${f.properties.pothole_count}<br>
+                <strong>Density:</strong> ${f.properties.density_per_km}/km
+              </div>
+            </div>
+          `);
+
+          layer.on('mouseover', function () {
+            this.setStyle({
+              weight: 4,
+              opacity: 1
+            });
+          });
+
+          layer.on('mouseout', function () {
+            this.setStyle({
+              weight: 2.5,
+              opacity: 0.9
+            });
+          });
+        }
+      }
+    ).addTo(rciMap);
+
+    // Only zoom to roads the first time
+    try {
+      const bounds = roadsLayer.getBounds();
+
+      if (!mapInitialized && bounds.isValid()) {
+        rciMap.fitBounds(bounds, {
+          padding: [50, 50],
+          maxZoom: 16
+        });
+
+        mapInitialized = true;
+      }
+
+    } catch (e) {
+
+      if (!mapInitialized) {
+        rciMap.setView([-1.0790, 36.9750], 14);
+        mapInitialized = true;
+      }
+
+    }
+
+  } catch (e) {
+    console.error('RCI Map Error:', e);
+  }
+}
 // ── init ─────────────────────────────────────────────────────────────────────
 loadStats();
 loadRoads();
@@ -928,5 +1132,3 @@ setInterval(()=>{
 </script>
 </body>
 </html>
-
-
