@@ -446,7 +446,7 @@ let searchQ   = '';
 let rciMap    = null;
 let roadsLayer = null;
 let jujaBoundaryLayer = null;
-
+let mapInitialised = false;
 const COND_COLOR = {
   Perfect: '#228B22',
   Good:    '#379155',
@@ -913,7 +913,29 @@ async function loadRCIMap() {
         layer.on('mouseout', function(){this.setStyle({weight:2.5,opacity:0.9});});
       }
     }).addTo(rciMap);
-    try{const b=roadsLayer.getBounds();if(b.isValid())rciMap.fitBounds(b,{padding:[50,50],maxZoom:16});}catch(e){rciMap.setView([-1.0790,36.9750],14);}
+    // try{const b=roadsLayer.getBounds();if(b.isValid())rciMap.fitBounds(b,{padding:[50,50],maxZoom:16});}catch(e){rciMap.setView([-1.0790,36.9750],14);}
+    // ##########################################################################################
+try{
+    const b = roadsLayer.getBounds();
+
+    if (!window.mapInitialised && b.isValid()) {
+        rciMap.fitBounds(b,{
+            padding:[50,50],
+            maxZoom:16
+        });
+
+        window.mapInitialised = true;
+    }
+
+}catch(e){
+
+    if (!window.mapInitialised) {
+        rciMap.setView([-1.0790,36.9750],14);
+        window.mapInitialised = true;
+    }
+
+}
+    // ###########################################################################################
   } catch(e){console.error('RCI Map Error:',e);}
 }
 
