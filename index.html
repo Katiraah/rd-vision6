@@ -687,22 +687,54 @@ function updateBadges(roads) {
 }
 
 // ── API ───────────────────────────────────────────────────────────────────────
+// async function loadStats() {
+//   try {
+//     const ctrl=new AbortController(); const tid=setTimeout(()=>ctrl.abort(),50000);
+//     const res=await fetch(`${API}/stats`,{signal:ctrl.signal}); clearTimeout(tid);
+//     if(!res.ok) throw new Error(`HTTP ${res.status}`);
+//     const data=await res.json(); if(!data.success) throw new Error(data.error);
+//     const s=data.stats;
+//     const sv=(id,val)=>{const el=document.getElementById(id);if(!el)return;el.textContent=val??'0';el.classList.remove('just-updated');void el.offsetWidth;el.classList.add('just-updated');};
+//     sv('stat-total',   s.total_roads);
+//     sv('stat-potholes',Number(s.total_potholes||0).toLocaleString());
+//     sv('stat-poor',    s.poor_roads||0);
+//   } catch(e) {
+//     ['stat-total','stat-potholes','stat-poor'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});
+//   }
+// }
 async function loadStats() {
   try {
-    const ctrl=new AbortController(); const tid=setTimeout(()=>ctrl.abort(),50000);
-    const res=await fetch(`${API}/stats`,{signal:ctrl.signal}); clearTimeout(tid);
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data=await res.json(); if(!data.success) throw new Error(data.error);
-    const s=data.stats;
-    const sv=(id,val)=>{const el=document.getElementById(id);if(!el)return;el.textContent=val??'0';el.classList.remove('just-updated');void el.offsetWidth;el.classList.add('just-updated');};
-    sv('stat-total',   s.total_roads);
-    sv('stat-potholes',Number(s.total_potholes||0).toLocaleString());
-    sv('stat-poor',    s.poor_roads||0);
-  } catch(e) {
-    ['stat-total','stat-potholes','stat-poor'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='—';});
+    const ctrl = new AbortController();
+    const tid = setTimeout(() => ctrl.abort(), 50000);
+
+    const res = await fetch(`${API}/stats`, { signal: ctrl.signal });
+    clearTimeout(tid);
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const data = await res.json();
+    if (!data.success) throw new Error(data.error);
+
+    const s = data.stats;
+
+    // Update values only (NO animation)
+    const sv = (id, val) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = val ?? '0';
+    };
+
+    sv('stat-total', s.total_roads);
+    sv('stat-potholes', Number(s.total_potholes || 0).toLocaleString());
+    sv('stat-poor', s.poor_roads || 0);
+
+  } catch (e) {
+    ['stat-total', 'stat-potholes', 'stat-poor'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = '—';
+    });
   }
 }
-
 async function loadRoads() {
   try {
     const ctrl=new AbortController(); const tid=setTimeout(()=>ctrl.abort(),50000);
