@@ -579,7 +579,7 @@ function renderTable() {
   });
   document.getElementById('result-count').textContent=rows.length;
   const tbody=document.getElementById('roads-tbody');
-  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="10" class="state-row">No roads match your search or filters.</td></tr>`; return; }
+  if(!rows.length){ tbody.innerHTML=`<tr><td colspan="10" class="state-row">No roads matching current filters.</td></tr>`; return; }
   tbody.innerHTML=rows.map(r=>`
     <tr onclick="openAnalysisFromTable(${r.gid})">
       <td class="road-id">${highlight(r.roadcode,q)}</td>
